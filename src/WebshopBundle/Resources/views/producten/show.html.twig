@@ -1,0 +1,44 @@
+{% extends '@Webshop/base.html.twig' %}
+
+{% block body %}
+    <h1>Producten</h1>
+
+    <table class="table table-striped">
+        <tbody>
+            <tr>
+                <th>Id</th>
+                <td>{{ producten.id }}</td>
+            </tr>
+            <tr>
+                <th>Code</th>
+                <td>{{ producten.code }}</td>
+            </tr>
+            <tr>
+                <th>Omschrijving</th>
+                <td>{{ producten.omschrijving }}</td>
+            </tr>
+            <tr>
+                <th>Prijs</th>
+                <td>{{ producten.prijs }}</td>
+            </tr>
+            <tr>
+                <th>Imagepath</th>
+                <td><img src="{{ logodir }}/{{ producten.imagePath }}" class="img-rounded" alt="{{ producten.omschrijving }}" width="95"></td>
+            </tr>
+        </tbody>
+    </table>
+
+
+    <a href="{{ path('producten_index') }}">
+        <button type="button" class="btn btn-info col-lg-2 right">Back to List</button>
+    </a>
+    {% if is_granted('ROLE_ADMIN') %}
+    <a href="{{ path('producten_edit', { 'id': producten.id }) }}">
+        <button type="button" class="btn btn-primary center-block col-lg-3">Edit</button>
+    </a>
+    {% endif %}
+    {{ form_start(delete_form) }}
+    <button type="submit" class="btn pull-right btn-danger">Delete</button>
+    {{ form_end(delete_form) }}
+
+{% endblock %}

@@ -1,0 +1,32 @@
+{% extends 'WebshopBundle::base.html.twig' %}
+
+{% block body %}
+    <h1>Regel</h1>
+
+    <table>
+        <tbody>
+            <tr>
+                <th>Id</th>
+                <td>{{ regel.id }}</td>
+            </tr>
+            <tr>
+                <th>Aantal</th>
+                <td>{{ regel.aantal }}</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <ul>
+        <li>
+            <a href="{{ path('regel_index') }}">Back to the list</a>
+        </li>
+        <li>
+            <a href="{{ path('regel_edit', { 'id': regel.id }) }}">Edit</a>
+        </li>
+        <li>
+            {{ form_start(delete_form) }}
+                <input type="submit" value="Delete">
+            {{ form_end(delete_form) }}
+        </li>
+    </ul>
+{% endblock %}

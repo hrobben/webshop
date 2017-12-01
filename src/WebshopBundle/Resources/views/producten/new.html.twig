@@ -1,0 +1,20 @@
+{% extends '@Webshop/base.html.twig' %}
+
+{% block body %}
+    <h1>Producten creation</h1>
+
+{% if is_granted("ROLE_ADMIN") %}
+    {{ form_start(form) }}
+        {{ form_widget(form) }}
+    <button type="submit" class="btn btn-primary">Create</button>
+    {{ form_end(form) }}
+
+    <a href="{{ path('producten_index') }}">
+        <button type="button" class="btn btn-info">Back to List</button>
+    </a>
+
+{% else %}
+    <h3>U dient eerst als adminUser aan te melden!</h3>
+{% endif %}
+
+{% endblock %}

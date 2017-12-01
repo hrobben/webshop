@@ -1,0 +1,43 @@
+{% extends 'WebshopBundle::base.html.twig' %}
+
+{% block body %}
+    <h1>Regels list</h1>
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Aantal</th>
+                <th>factuurId</th>
+                <th>productId</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for regel in regels %}
+            <tr>
+                <td><a href="{{ path('regel_show', { 'id': regel.id }) }}">{{ regel.id }}</a></td>
+                <td>{{ regel.aantal }}</td>
+                <td>{{ regel.factuurId }}</td>
+                <td>{{ regel.productId }}</td>
+                <td>
+                    <ul>
+                        <li>
+                            <a href="{{ path('regel_show', { 'id': regel.id }) }}">show</a>
+                        </li>
+                        <li>
+                            <a href="{{ path('regel_edit', { 'id': regel.id }) }}">edit</a>
+                        </li>
+                    </ul>
+                </td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    <ul>
+        <li>
+            <a href="{{ path('regel_new') }}">Create a new regel</a>
+        </li>
+    </ul>
+{% endblock %}

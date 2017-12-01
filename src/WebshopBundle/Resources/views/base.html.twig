@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8"/>
+    <title>{% block title %}Nieuwe base.html.twig!{% endblock %}</title>
+
+    <link href="{{ asset('bundles/webshop/css/bootstrap.min.css') }}" rel="stylesheet">
+    <link href="https://code.jquery.com/ui/1.9.2/themes/base/jquery-ui.css" rel="stylesheet" type="text/css">
+
+    {% block stylesheets %}{% endblock %}
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+    <script src="{{ asset('bundles/webshop/js/bootstrap.min.js') }}"></script>
+
+    <link rel="icon" type="image/x-icon" href="{{ asset('favicon.ico') }}"/>
+</head>
+<body>
+<!-- Fixed navbar -->
+<nav class="navbar navbar-inverse">
+    <div class="container">
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar"
+                    aria-expanded="false" aria-controls="navbar">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="/">Webshop theme</a>
+        </div>
+        <div id="navbar" class="navbar-collapse collapse">
+            <ul class="nav navbar-nav">
+                <li class="active"><a href="/">Home</a></li>
+                <li><a href="{{ path('producten_index') }}">Producten</a></li>
+                <li><a href="#contact">Contact</a></li>
+                <li class="dropdown">
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true"
+                       aria-expanded="false">Dropdown <span class="caret"></span></a>
+                    <ul class="dropdown-menu">
+                        {% if app.user %}
+                            <li class=""><a href="/logout">logoff {{ app.user | capitalize }}</a></li>
+                        {% else %}
+                            <li class=""><a href="/login">login</a></li>
+                        {% endif %}
+                        {% if is_granted("ROLE_ADMIN") %}
+                            <li><a href="{{ path('factuur_index') }}">Facturen</a></li>
+                        {% endif %}
+                        <li><a href="{{ path('cart') }}">Winkelwagen</a></li>
+                        <li role="separator" class="divider"></li>
+                        <li class="dropdown-header">Nav header</li>
+                        {% if is_granted("ROLE_ADMIN") %}
+                        <li><a href="{{ path('regel_index') }}">Regels</a></li>
+
+                        <li><a href="{{ path('fos_user_registration_register') }}">Nieuwe gebruiker</a></li>
+                        {% endif %}
+                    </ul>
+                </li>
+            </ul>
+        </div><!--/.nav-collapse -->
+    </div>
+</nav>
+
+<div class="container theme-showcase" role="main">
+    {% block fos_user_content %}{% endblock %}
+    {% block body %}{% endblock %}
+</div>
+
+
+<script src="https://code.jquery.com/ui/1.12.0/jquery-ui.js"></script>
+<script>
+    jQuery(function($) {
+        $( ".myDatePickerInput" ).datepicker({ dateFormat: 'dd-mm-yy' });
+    });
+</script>
+{% block javascripts %}{% endblock %}
+</body>
+</html>

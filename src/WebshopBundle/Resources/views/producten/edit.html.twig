@@ -1,0 +1,24 @@
+{% extends '@Webshop/base.html.twig' %}
+
+{% block body %}
+    <h1>Producten edit</h1>
+
+    {% if is_granted("ROLE_ADMIN") %}
+        <img src="{{ logodir }}/{{ producten.imagepath }}" class="img-rounded" alt="{{ producten.omschrijving }}"
+             width="95">
+        {{ form_start(edit_form) }}
+        {{ form_widget(edit_form) }}
+        <a href="{{ path('producten_index') }}">
+            <button type="button" class="btn btn-info col-lg-2 right">Back to List</button>
+        </a>
+        <button type="submit" class="btn btn-primary center-block col-lg-3">Save</button>
+        {{ form_end(edit_form) }}
+
+        {{ form_start(delete_form) }}
+        <button type="submit" class="btn btn-danger pull-right">Delete</button>
+        {{ form_end(delete_form) }}
+    {% else %}
+        <h3>U dient eerst als adminUser aan te melden!</h3>
+    {% endif %}
+
+{% endblock %}

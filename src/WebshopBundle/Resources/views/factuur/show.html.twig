@@ -1,0 +1,52 @@
+{% extends 'WebshopBundle::base.html.twig' %}
+
+{% block body %}
+<h1>Factuur {{ factuur.id }}</h1>
+<h2> datum: {{ factuur.datum|date('d-m-Y') }}</h2>
+
+
+<table class="table table-striped pull-right">
+    <thead>
+    <tr>
+        <th>Aantal</th>
+        <th>product</th>
+        <th>prijs</th>
+        <th>totaal</th>
+    </tr>
+    </thead>
+    <tbody>
+    {% set gentot = 0 %}
+    {% for regel in regels %}
+    <tr>
+        <td>{{ regel.aantal }}</td>
+        {% set totaal = regel.aantal %}
+        <td>{{ regel.productId }}</td>
+        <td>
+            {% for product in products %}
+                {% set p = regel.productId %}
+                    {% if p.id == product.id %}
+                       {{ product.prijs|number_format(2) }}
+                        {% set totaal = (totaal * product.prijs) %}
+                    {% endif %}
+            {% endfor %}
+        </td>
+        <td>{{ totaal|number_format(2) }}</td>
+        {% set gentot = (gentot + totaal) %}
+    </tr>
+    {% endfor %}
+    </tbody>
+</table>
+    <h3 class="btn-block">totaal voor deze factuur = € {{ gentot|number_format(2) }}</h3></br>
+
+<a href="{{ path('factuur_index') }}">
+    <button type="button" class="btn btn-info col-lg-2 right">Back to List</button>
+</a>
+{% if is_granted('ROLE_ADMIN') %}
+    <a href="{{ path('factuur_edit', { 'id': factuur.id }) }}">
+        <button type="button" class="btn btn-primary center-block col-lg-3">Edit</button>
+    </a>
+{% endif %}
+    {{ form_start(delete_form) }}
+<button type="submit" class="btn pull-right btn-danger">Delete</button>
+{{ form_end(delete_form) }}
+{% endblock %}

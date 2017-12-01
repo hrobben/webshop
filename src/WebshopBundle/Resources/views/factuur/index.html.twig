@@ -1,0 +1,47 @@
+{% extends 'WebshopBundle::base.html.twig' %}
+
+{% block body %}
+    <h1>Factuurs list</h1>
+
+    {% if is_granted("ROLE_ADMIN") %}
+        <a href="{{ path('factuur_new') }}">
+            <button type="button" class="btn btn-primary">Nieuw</button>
+        </a>
+    {% endif %}
+
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Datum</th>
+                <th>klant</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for factuur in factuurs %}
+            <tr>
+                <td><a href="{{ path('factuur_show', { 'id': factuur.id }) }}">{{ factuur.id }}</a></td>
+                <td>{{ factuur.datum|date('Y-m-d') }}</td>
+                <td>{{ factuur.klantId }}</td>
+                {% if is_granted("ROLE_ADMIN") %}
+                    <td>
+                        <a href="{{ path('factuur_show', { 'id': factuur.id }) }}">
+                            <button type="button" class="btn btn-xs btn-info">show</button>
+                        </a>
+                        <a href="{{ path('factuur_edit', { 'id': factuur.id }) }}">
+                            <button type="button" class="btn btn-xs btn-primary">edit</button>
+                        </a>
+                    </td>
+                {% endif %}
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    {% if is_granted("ROLE_ADMIN") %}
+        <a href="{{ path('factuur_new') }}">
+            <button type="button" class="btn btn-primary">Nieuw</button>
+        </a>
+    {% endif %}
+{% endblock %}

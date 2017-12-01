@@ -1,0 +1,57 @@
+{% extends '@Webshop/base.html.twig' %}
+
+{% block body %}
+    <h1>Productens list</h1>
+
+    {% if is_granted("ROLE_ADMIN") %}
+        <a href="{{ path('producten_new') }}">
+            <button type="button" class="btn btn-primary">Nieuw</button>
+        </a>
+    {% endif %}
+
+    <table class="table table-striped">
+        <thead>
+        <tr>
+            <th>Id</th>
+            <th>Code</th>
+            <th>Omschrijving</th>
+            <th>Prijs</th>
+            <th>Imagepath</th>
+            <th>Actions</th>
+        </tr>
+        </thead>
+        <tbody>
+        {% for producten in productens %}
+            <tr>
+                <td><a href="{{ path('producten_show', { 'id': producten.id }) }}">{{ producten.id }}</a></td>
+                <td>{{ producten.code }}</td>
+                <td>{{ producten.omschrijving }}</td>
+                <td>{{ producten.prijs }}</td>
+                <td><img src="{{ logodir }}/{{ producten.imagePath }}" class="img-rounded" alt="{{ producten.omschrijving }}" width="75"></td>
+                <td>
+                    {% if is_granted("ROLE_ADMIN") %}
+                <td>
+                    <a href="{{ path('producten_show', { 'id': producten.id }) }}">
+                        <button type="button" class="btn btn-xs btn-info">show</button>
+                    </a>
+
+                    <a href="{{ path('producten_edit', { 'id': producten.id }) }}">
+                        <button type="button" class="btn btn-xs btn-primary">edit</button>
+
+                    </a><a href="{{ path('cart_add', { 'id': producten.id }) }}">
+                        <button type="button" class="btn btn-xs btn-success">Bestellen</button>
+                    </a>
+                </td>
+                {% endif %}
+                </td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    {% if is_granted("ROLE_ADMIN") %}
+        <a href="{{ path('producten_new') }}">
+            <button type="button" class="btn btn-primary">Nieuw</button>
+        </a>
+    {% endif %}
+{% endblock %}
