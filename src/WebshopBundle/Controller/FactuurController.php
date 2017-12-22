@@ -100,19 +100,21 @@ class FactuurController extends Controller
 
         $factuur->setRegels($regels);
 
-        $originalRegels = new ArrayCollection();
-
-        // Create an ArrayCollection of the current Tag objects in the database
-        foreach ($factuur->getRegels() as $regel) {
-            $originalRegels->add($regel);
-        }
-
-
         $deleteForm = $this->createDeleteForm($factuur);
         $editForm = $this->createForm('WebshopBundle\Form\FactuurType', $factuur);
+        $previousCollections = array(
+            'regels' => $factuur->getRegels(),
+        );
         $editForm->handleRequest($request);
 
         if ($editForm->isSubmitted() && $editForm->isValid()) {
+
+            $this->deleteCollections($em, $previousCollections, $factuur);
+
+            // put in collection of forms items
+            foreach ($factuur->getRegels() as $regel) {
+                $em->persist($regel);
+            }
             $this->getDoctrine()->getManager()->flush();
 
             return $this->redirectToRoute('factuur_edit', array('id' => $factuur->getId()));
@@ -124,6 +126,25 @@ class FactuurController extends Controller
             'edit_form' => $editForm->createView(),
             'delete_form' => $deleteForm->createView(),
         ));
+    }
+
+    /**
+     * to remove collection of forms items
+     * @param $em
+     * @param $init
+     * @param $final
+     */
+    private function deleteCollections($em, $init, $final)
+    {
+        if (empty($init)) {
+            return;
+        }
+
+        if (!$final->getRegels() instanceof \Doctrine\ORM\PersistentCollection) {
+            foreach ($init['regels'] as $addr) {
+                $em->remove($addr);
+            }
+        }
     }
 
     /**

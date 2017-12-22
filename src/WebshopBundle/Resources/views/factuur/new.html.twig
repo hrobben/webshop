@@ -4,6 +4,7 @@
     <h1>Factuur creation</h1>
 
     {% if is_granted("ROLE_ADMIN") %}
+        {% form_theme form 'jquery.collection.html.twig' %}
         {{ form_start(form) }}
         {{ form_widget(form) }}
         <button type="submit" class="btn btn-primary">Create</button>
@@ -19,3 +20,16 @@
 
 {% endblock %}
 
+{% block javascripts %}
+    <script src="{{ asset('js/jquery.collection.js') }}"></script>
+
+    <script type="text/javascript">
+        $('.my-selector').collection({
+            up: '<a href="#" class="btn btn-default"><span class="glyphicon glyphicon-arrow-up"></span></a>',
+            down: '<a href="#" class="btn btn-default"><span class="glyphicon glyphicon-arrow-down"></span></a>',
+            add: '<a href="#" class="btn btn-default"><span class="glyphicon glyphicon-plus-sign"></span></a>',
+            remove: '<a href="#" class="btn btn-default"><span class="glyphicon glyphicon-trash"></span></a>'
+        });
+
+    </script>
+{% endblock %}

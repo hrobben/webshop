@@ -4,7 +4,6 @@
 
 {% block fos_user_content %}
     {% if is_granted("ROLE_ADMIN") %}
-        {% form_theme form 'bootstrap_3_horizontal_layout.html.twig' %}
         {{ form_start(form, {'method': 'post', 'action': path('fos_user_registration_register'), 'attr': {'class': 'fos_user_registration_register'}}) }}
         {{ form_widget(form) }}
         <div>

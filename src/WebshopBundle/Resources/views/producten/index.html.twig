@@ -1,4 +1,4 @@
-{% extends '@Webshop/base.html.twig' %}
+{% extends 'WebshopBundle::base.html.twig' %}
 
 {% block body %}
     <h1>Productens list</h1>
@@ -9,7 +9,7 @@
         </a>
     {% endif %}
 
-    <table class="table table-striped">
+    <table id="lijst" class="table table-striped">
         <thead>
         <tr>
             <th>Id</th>
@@ -28,7 +28,6 @@
                 <td>{{ producten.omschrijving }}</td>
                 <td>{{ producten.prijs }}</td>
                 <td><img src="{{ logodir }}/{{ producten.imagePath }}" class="img-rounded" alt="{{ producten.omschrijving }}" width="75"></td>
-                <td>
                     {% if is_granted("ROLE_ADMIN") %}
                 <td>
                     <a href="{{ path('producten_show', { 'id': producten.id }) }}">
@@ -43,7 +42,6 @@
                     </a>
                 </td>
                 {% endif %}
-                </td>
             </tr>
         {% endfor %}
         </tbody>
@@ -55,3 +53,4 @@
         </a>
     {% endif %}
 {% endblock %}
+

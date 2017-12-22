@@ -29,6 +29,8 @@ class FactuurType extends AbstractType
                     'allow_delete' => true,
                     'delete_empty' => true,
                     'prototype' => true,
+                    'attr' => array('class' => 'my-selector',
+                    ),
                     'by_reference' => false)
             );
     }

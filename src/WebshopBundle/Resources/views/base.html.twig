@@ -5,12 +5,25 @@
     <title>{% block title %}Nieuwe base.html.twig!{% endblock %}</title>
 
     <link href="{{ asset('bundles/webshop/css/bootstrap.min.css') }}" rel="stylesheet">
-    <link href="https://code.jquery.com/ui/1.9.2/themes/base/jquery-ui.css" rel="stylesheet" type="text/css">
+    <link rel="stylesheet" href="{{ asset('bundles/webshop/css/dataTables.bootstrap4.min.css') }}">
+    <link rel="stylesheet" href="{{ asset('bundles/webshop/css/buttons.bootstrap4.min.css') }}">
 
     {% block stylesheets %}{% endblock %}
 
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+    <script
+            src="https://code.jquery.com/jquery-3.2.1.min.js"
+            integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4="
+            crossorigin="anonymous"></script>
     <script src="{{ asset('bundles/webshop/js/bootstrap.min.js') }}"></script>
+    <script src="{{ asset('bundles/webshop/js/jquery.dataTables.min.js') }}"></script>
+    <script src="{{ asset('bundles/webshop/js/dataTables.bootstrap4.min.js') }}"></script>
+    <script src="{{ asset('bundles/webshop/js/buttons.bootstrap4.min.js') }}"></script>
+    <script src="{{ asset('bundles/webshop/js/buttons.colVis.min.js') }}"></script>
+    <script src="{{ asset('bundles/webshop/js/buttons.flash.min.js') }}"></script>
+    <script src="{{ asset('bundles/webshop/js/buttons.html5.min.js') }}"></script>
+    <script src="{{ asset('bundles/webshop/js/jszip.min.js') }}"></script>
+    <script src="{{ asset('bundles/webshop/js/pdfmake.min.js') }}"></script>
+
 
     <link rel="icon" type="image/x-icon" href="{{ asset('favicon.ico') }}"/>
 </head>
@@ -64,12 +77,23 @@
     {% block fos_user_content %}{% endblock %}
     {% block body %}{% endblock %}
 </div>
+<script type="text/javascript" charset="utf-8">
+    $(document).ready(function () {
+        var table = $('#lijst').DataTable({
+            "order": [[ 0, "desc" ]],
+            extend: 'collection',
+            text: 'Export',
+            buttons: [
+                'copy',
+                'excel',
+                'csv',
+                'pdf',
+                'print'
+            ]
+        });
 
-
-<script src="https://code.jquery.com/ui/1.12.0/jquery-ui.js"></script>
-<script>
-    jQuery(function($) {
-        $( ".myDatePickerInput" ).datepicker({ dateFormat: 'dd-mm-yy' });
+        table.buttons().container()
+            .appendTo( $('.col-sm-6:eq(0)', table.table().container() ) );
     });
 </script>
 {% block javascripts %}{% endblock %}

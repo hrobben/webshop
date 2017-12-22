@@ -45,8 +45,6 @@ twig:
     globals:
         logodir: '%download_image%'
 
-    form_themes: ['bootstrap_3_horizontal_layout.html.twig']
-
 # Doctrine Configuration
 doctrine:
     dbal:

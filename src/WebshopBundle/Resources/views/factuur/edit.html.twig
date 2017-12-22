@@ -4,9 +4,9 @@
     <h1>Factuur edit</h1>
 
 {% if is_granted("ROLE_ADMIN") %}
+    {% form_theme edit_form 'jquery.collection.html.twig' %}
     {{ form_start(edit_form) }}
-    <div class="rgls" data-prototype="{{ form_widget(edit_form.regels.vars.prototype)|e('html_attr') }}">
-        {{ form_widget(edit_form) }}
+    {{ form_widget(edit_form) }}
     <a href="{{ path('factuur_index') }}">
         <button type="button" class="btn btn-info col-lg-2 left">Back to List</button>
     </a>
@@ -25,68 +25,15 @@
 {% endblock %}
 
 {% block javascripts %}
-    <script>
+    <script src="{{ asset('js/jquery.collection.js') }}"></script>
 
-        var $collectionHolder;
-
-        // setup an "add a regel" link
-        var $addRglsLink = $('<button type="button" class="btn btn-success col-lg-2">Add a regel</button>');
-        var $newLinkLi = $('<div></div>').append($addRglsLink);
-
-        jQuery(document).ready(function () {
-            // Get the div that holds the collection of tags
-            $collectionHolder = $('div.rgls');
-
-            // add the "add a regel" anchor and div to the tags div
-            $collectionHolder.append($newLinkLi);
-
-            // count the current form inputs we have (e.g. 2), use that as the new
-            // index when inserting a new item (e.g. 2)
-            $collectionHolder.data('index', $collectionHolder.find(':input').length);
-
-            $addRglsLink.on('click', function (e) {
-                // prevent the link from creating a "#" on the URL
-                e.preventDefault();
-
-                // add a new tag form (see next code block)
-                addRglsForm($collectionHolder, $newLinkLi);
-            });
+    <script type="text/javascript">
+        $('.my-selector').collection({
+            up: '<a href="#" class="btn btn-default"><span class="glyphicon glyphicon-arrow-up"></span></a>',
+            down: '<a href="#" class="btn btn-default"><span class="glyphicon glyphicon-arrow-down"></span></a>',
+            add: '<a href="#" class="btn btn-default"><span class="glyphicon glyphicon-plus-sign"></span></a>',
+            remove: '<a href="#" class="btn btn-default"><span class="glyphicon glyphicon-trash"></span></a>'
         });
-
-        function addRglsForm($collectionHolder, $newLinkLi) {
-            // Get the data-prototype explained earlier
-            var prototype = $collectionHolder.data('prototype');
-
-            // get the new index
-            var index = $collectionHolder.data('index');
-
-            // Replace '__name__' in the prototype's HTML to
-            // instead be a number based on how many items we have
-            var newForm = prototype.replace(/__name__/g, index);
-
-            // increase the index with one for the next item
-            $collectionHolder.data('index', index + 1);
-
-            // Display the form in the page in an li, before the "Add a tag" link li
-            var $newFormLi = $('<div></div>').append(newForm);
-            $newLinkLi.before($newFormLi);
-
-            // add a delete link to the new form
-            addRglsFormDeleteLink($newFormLi);
-        }
-
-        function addRglsFormDeleteLink($tagFormLi) {
-            var $removeFormA = $('<button type="button" class="btn btn-warning col-lg-2">delete this tag</button>');
-            $tagFormLi.append($removeFormA);
-
-            $removeFormA.on('click', function(e) {
-                // prevent the link from creating a "#" on the URL
-                e.preventDefault();
-
-                // remove the li for the tag form
-                $tagFormLi.remove();
-            });
-        }
 
     </script>
 {% endblock %}
