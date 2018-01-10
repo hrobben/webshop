@@ -24,7 +24,7 @@ class Factuur
 
     /**
      *
-     * @ORM\ManyToOne(targetEntity="User")
+     * @ORM\ManyToOne(targetEntity="WebshopBundle\Entity\User")
      * @ORM\JoinColumn(name="klantId", referencedColumnName="id")
      *
      */
