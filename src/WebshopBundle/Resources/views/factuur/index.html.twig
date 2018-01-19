@@ -11,12 +11,12 @@
 
     <table id="lijst" class="table table-striped">
         <thead>
-            <tr>
-                <th>Id</th>
-                <th>Datum</th>
-                <th>klant</th>
-                <th>Actions</th>
-            </tr>
+        <tr>
+            <th>Id</th>
+            <th>Datum</th>
+            <th>klant</th>
+            <th>Actions</th>
+        </tr>
         </thead>
         <tbody>
         {% for factuur in factuurs %}
@@ -24,16 +24,18 @@
                 <td><a href="{{ path('factuur_show', { 'id': factuur.id }) }}">{{ factuur.id }}</a></td>
                 <td>{{ factuur.datum|date('Y-m-d') }}</td>
                 <td>{{ factuur.klantId }}</td>
-                {% if is_granted("ROLE_ADMIN") %}
-                    <td>
-                        <a href="{{ path('factuur_show', { 'id': factuur.id }) }}">
-                            <button type="button" class="btn btn-xs btn-info">show</button>
-                        </a>
+
+                <td>
+                    <a href="{{ path('factuur_show', { 'id': factuur.id }) }}">
+                        <button type="button" class="btn btn-xs btn-info">show</button>
+                    </a>
+                    {% if is_granted("ROLE_ADMIN") %}
                         <a href="{{ path('factuur_edit', { 'id': factuur.id }) }}">
                             <button type="button" class="btn btn-xs btn-primary">edit</button>
                         </a>
-                    </td>
-                {% endif %}
+                    {% endif %}
+                </td>
+
             </tr>
         {% endfor %}
         </tbody>

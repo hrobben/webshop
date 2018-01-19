@@ -28,20 +28,20 @@
                 <td>{{ producten.omschrijving }}</td>
                 <td>{{ producten.prijs }}</td>
                 <td><img src="{{ logodir }}/{{ producten.imagePath }}" class="img-rounded" alt="{{ producten.omschrijving }}" width="75"></td>
-                    {% if is_granted("ROLE_ADMIN") %}
+
                 <td>
                     <a href="{{ path('producten_show', { 'id': producten.id }) }}">
                         <button type="button" class="btn btn-xs btn-info">show</button>
                     </a>
-
+                    {% if is_granted("ROLE_ADMIN") %}
                     <a href="{{ path('producten_edit', { 'id': producten.id }) }}">
                         <button type="button" class="btn btn-xs btn-primary">edit</button>
-
+                        {% endif %}
                     </a><a href="{{ path('cart_add', { 'id': producten.id }) }}">
                         <button type="button" class="btn btn-xs btn-success">Bestellen</button>
                     </a>
                 </td>
-                {% endif %}
+
             </tr>
         {% endfor %}
         </tbody>

@@ -28,7 +28,11 @@ class FactuurController extends Controller
     {
         $em = $this->getDoctrine()->getManager();
 
-        $factuurs = $em->getRepository('WebshopBundle:Factuur')->findAll();
+        if ($this->get('security.authorization_checker')->isGranted('ROLE_ADMIN')) {
+            $factuurs = $em->getRepository('WebshopBundle:Factuur')->findAll();
+        } else {
+            $factuurs = $em->getRepository('WebshopBundle:Factuur')->findBy(['klantId' => $this->getUser()]);
+        }
 
         return $this->render('WebshopBundle:factuur:index.html.twig', array(
             'factuurs' => $factuurs,
