@@ -4,7 +4,7 @@
 <h1>Factuur {{ factuur.id }}</h1>
 <h2> datum: {{ factuur.datum|date('d-m-Y') }}</h2>
 
-
+    {% if (factuur.klantId == app.user) %}
 <table class="table table-striped pull-right">
     <thead>
     <tr>
@@ -49,4 +49,9 @@
     {{ form_start(delete_form) }}
 <button type="submit" class="btn pull-right btn-danger">Delete</button>
 {{ form_end(delete_form) }}
+
+{% else %}
+        <h2>Deze factuur is van andere klant.</h2>
+{% endif %}
+
 {% endblock %}
